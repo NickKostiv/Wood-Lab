@@ -4,8 +4,11 @@ import "./globals.css";
 const montserrat = Montserrat({ subsets: ["latin", "cyrillic-ext"] });
 
 export const metadata = {
-  title: "Меблі в Івано-Франківську",
+  title: "Wood Lab",
   description: "Виготовлення меблів на замовлення в Івано-Франківську",
+  icons: {
+    icon: "/logo.jpg",
+  },
 };
 
 export default function RootLayout({ children }) {
