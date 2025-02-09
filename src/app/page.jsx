@@ -13,6 +13,7 @@ import {
   HiOutlineCube,
   HiOutlineStar,
 } from "react-icons/hi";
+import FaqAccordion from "@/components/FaqAccordion";
 
 export default function Home() {
   useEffect(() => {
@@ -240,6 +241,20 @@ export default function Home() {
                 <p className="text-gray-600">{step.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-white">
+        <div className="container">
+          <h2
+            className="text-3xl font-bold text-center mb-12"
+            data-aos="fade-up">
+            Найпоширеніші запитання
+          </h2>
+          <div className="max-w-3xl mx-auto" data-aos="fade-up">
+            <FaqAccordion />
           </div>
         </div>
       </section>
