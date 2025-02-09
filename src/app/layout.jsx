@@ -38,7 +38,7 @@ export const metadata = {
     },
   },
   verification: {
-    google: "ваш-код-верифікації", // Додайте після верифікації в Google Search Console
+    google: "KxCaXWMW56W9R9hXjNdSkOeN1cXcO1Ia2AuoFXC_fMA",
   },
 };
 
