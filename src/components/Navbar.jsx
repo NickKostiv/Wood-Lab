@@ -91,12 +91,12 @@ export default function Navbar() {
           className={`md:hidden absolute left-0 right-0 bg-white px-4 pt-2 pb-4 shadow-lg transition-all duration-300 ${
             isOpen ? "top-20 opacity-100" : "-top-96 opacity-0"
           }`}>
-          <div className="space-y-3">
+          <div className="flex flex-col space-y-4">
             {menuItems.map(item => (
               <Link
                 key={item.title}
                 href={item.href}
-                className="text-gray-700 hover:text-gray-900 transition-colors"
+                className="block py-2 text-gray-700 hover:text-gray-900 transition-colors"
                 onClick={() => setIsOpen(false)}>
                 {item.title}
               </Link>
