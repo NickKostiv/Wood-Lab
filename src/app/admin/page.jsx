@@ -38,27 +38,27 @@ export default function Admin() {
     checkSession();
   }, []);
 
-  useEffect(() => {
-    const loadImages = async () => {
-      try {
-        console.log("Loading images for category:", category);
-        const { data, error } = await supabase
-          .from("images")
-          .select("*")
-          .eq("category", category);
+  const loadImages = async () => {
+    try {
+      console.log("Loading images for category:", category);
+      const { data, error } = await supabase
+        .from("images")
+        .select("*")
+        .eq("category", category);
 
-        if (error) {
-          console.error("Error loading images:", error);
-          return;
-        }
-
-        console.log("Loaded images:", data);
-        setImages(data || []);
-      } catch (error) {
+      if (error) {
         console.error("Error loading images:", error);
+        return;
       }
-    };
 
+      console.log("Loaded images:", data);
+      setImages(data || []);
+    } catch (error) {
+      console.error("Error loading images:", error);
+    }
+  };
+
+  useEffect(() => {
     if (session) {
       loadImages();
     }
@@ -66,7 +66,6 @@ export default function Admin() {
 
   const uploadImage = async event => {
     try {
-      // Перевірка авторизації
       if (!session) {
         throw new Error("Необхідно авторизуватися");
       }
@@ -74,7 +73,6 @@ export default function Admin() {
       setUploading(true);
       const file = event.target.files[0];
 
-      // Перевіряємо чи файл вибрано
       if (!file) {
         throw new Error("No file selected");
       }
@@ -107,20 +105,22 @@ export default function Admin() {
       }
 
       console.log("Inserting into database...");
-      const { error: dbError } = await supabase
+      const { data: newImage, error: dbError } = await supabase
         .from("images")
-        .insert([{ url: urlData.publicUrl, category }]);
+        .insert([{ url: urlData.publicUrl, category }])
+        .select()
+        .single();
 
       if (dbError) {
         console.error("Database insert error:", dbError);
         throw dbError;
       }
 
+      setImages(prevImages => [...prevImages, newImage]);
+
       console.log("Upload completed successfully");
-      loadImages();
     } catch (error) {
       console.error("Error uploading image:", error.message || error);
-      // Показати користувачу повідомлення про помилку
       alert(
         "Помилка при завантаженні зображення: " +
           (error.message || "Невідома помилка")
@@ -193,7 +193,7 @@ export default function Admin() {
 
       if (error) throw error;
 
-      loadImages();
+      setImages(prevImages => prevImages.filter(img => img.id !== imageId));
     } catch (error) {
       console.error("Error deleting image:", error);
     }

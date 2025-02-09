@@ -8,24 +8,28 @@ import Navbar from "@/components/Navbar";
 
 const categories = [
   {
+    id: 1,
     title: "Кухні",
     image: "/1.jpg",
     href: "/gallery/kitchens",
     description: "Сучасні та функціональні кухні на замовлення",
   },
   {
+    id: 2,
     title: "Ванни",
     image: "/2.jpg",
     href: "/gallery/bathrooms",
     description: "Стильні меблі для ванної кімнати",
   },
   {
+    id: 3,
     title: "Спальні",
     image: "/3.jpg",
     href: "/gallery/bedrooms",
     description: "Затишні спальні гарнітури",
   },
   {
+    id: 4,
     title: "Вітальні",
     image: "/4.jpg",
     href: "/gallery/living-rooms",
@@ -44,34 +48,27 @@ export default function Gallery() {
   return (
     <main>
       <Navbar />
-      <div className="pt-24 pb-12">
-        <div className="container">
-          <h1
-            className="text-4xl font-bold text-center mb-12"
-            data-aos="fade-up">
-            Галерея наших робіт
+      <div className="min-h-screen bg-gray-900 pt-24 pb-12">
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl font-bold text-center mb-12 text-white">
+            Галерея
           </h1>
-          <div className="grid md:grid-cols-2 gap-8">
-            {categories.map((category, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {categories.map(category => (
               <Link
+                key={category.id}
                 href={category.href}
-                key={category.title}
-                className="group relative overflow-hidden rounded-xl shadow-lg transition-transform hover:-translate-y-1"
-                data-aos="fade-up"
-                data-aos-delay={index * 100}>
-                <div className="relative h-[400px]">
-                  <Image
-                    src={category.image}
-                    alt={category.title}
-                    fill
-                    className="object-cover transition-transform group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/20 p-6 flex flex-col justify-end">
-                    <h2 className="text-2xl font-bold text-white mb-2">
-                      {category.title}
-                    </h2>
-                    <p className="text-white/90">{category.description}</p>
-                  </div>
+                className="group relative h-[300px] overflow-hidden rounded-lg">
+                <Image
+                  src={category.image}
+                  alt={category.title}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                  <h2 className="text-3xl font-bold text-white">
+                    {category.title}
+                  </h2>
                 </div>
               </Link>
             ))}

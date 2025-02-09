@@ -49,7 +49,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed w-full bg-white shadow-lg z-50">
+    <nav className="fixed w-full bg-gray-900 shadow-lg z-50">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
           <Link href="/" className="flex items-center space-x-2">
@@ -60,7 +60,7 @@ export default function Navbar() {
               height={40}
               className="rounded-full"
             />
-            <span className="font-bold text-xl">Wood Lab</span>
+            <span className="font-bold text-xl text-white">Wood Lab</span>
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
@@ -68,7 +68,7 @@ export default function Navbar() {
               <Link
                 key={item.title}
                 href={item.href}
-                className="text-gray-700 hover:text-gray-900 transition-colors">
+                className="text-gray-300 hover:text-white transition-colors">
                 {item.title}
               </Link>
             ))}
@@ -77,7 +77,7 @@ export default function Navbar() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg hover:bg-gray-100 focus:outline-none">
+              className="p-2 rounded-lg hover:bg-gray-800 focus:outline-none text-white">
               {isOpen ? (
                 <HiX className="w-6 h-6" />
               ) : (
@@ -88,7 +88,7 @@ export default function Navbar() {
         </div>
 
         <div
-          className={`md:hidden absolute left-0 right-0 bg-white px-4 pt-2 pb-4 shadow-lg transition-all duration-300 ${
+          className={`md:hidden absolute left-0 right-0 bg-gray-900 px-4 pt-2 pb-4 shadow-lg transition-all duration-300 ${
             isOpen ? "top-20 opacity-100" : "-top-96 opacity-0"
           }`}>
           <div className="flex flex-col space-y-4">
@@ -96,7 +96,7 @@ export default function Navbar() {
               <Link
                 key={item.title}
                 href={item.href}
-                className="block py-2 text-gray-700 hover:text-gray-900 transition-colors"
+                className="block py-2 text-gray-300 hover:text-white transition-colors"
                 onClick={() => setIsOpen(false)}>
                 {item.title}
               </Link>
@@ -106,7 +106,7 @@ export default function Navbar() {
       </div>
 
       <div
-        className={`absolute left-0 right-0 bg-white shadow-lg transition-all duration-300 ${
+        className={`absolute left-0 right-0 bg-gray-900 shadow-lg transition-all duration-300 ${
           isDropdownOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
         style={{

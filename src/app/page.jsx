@@ -6,7 +6,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import Navbar from "@/components/Navbar";
-import { FaFacebook, FaInstagram, FaTelegram } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTelegram, FaTiktok } from "react-icons/fa";
 import {
   HiArrowRight,
   HiOutlineHome,
@@ -69,7 +69,7 @@ export default function Home() {
         <Navbar />
 
         {/* Hero Section */}
-        <section className="min-h-screen relative flex items-center bg-gradient-to-br from-gray-50 to-gray-100 pt-28 md:pt-0">
+        <section className="min-h-screen relative flex items-center bg-gradient-to-br from-gray-900 to-gray-800 pt-28 md:pt-0">
           <div className="absolute inset-0 opacity-10">
             <svg
               className="w-full h-full"
@@ -94,16 +94,16 @@ export default function Home() {
           <div className="container relative">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div data-aos="fade-right">
-                <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-800 to-gray-600">
-                  Wood Lab - Дерев'яні меблі в Івано-Франківську
+                <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+                  Wood Lab - Корпусні меблі в Івано-Франківську
                 </h1>
-                <p className="text-xl text-gray-600 mb-8">
+                <p className="text-xl text-gray-300 mb-8">
                   Створюємо унікальні меблі, які перетворюють ваш простір у
                   місце, де хочеться жити
                 </p>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center px-6 py-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-colors">
+                  className="inline-flex items-center px-6 py-3 bg-gray-700 text-white rounded-full hover:bg-gray-600 transition-colors">
                   Зв'яжіться з нами
                   <HiArrowRight className="ml-2" />
                 </Link>
@@ -111,7 +111,7 @@ export default function Home() {
               <div className="relative" data-aos="fade-left">
                 <div className="aspect-square relative">
                   <Image
-                    src="/9.jpg"
+                    src="/hero-img.jpg"
                     alt="Меблі"
                     fill
                     className="object-cover rounded-2xl shadow-2xl"
@@ -132,20 +132,20 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section className="py-24 bg-white">
+        <section className="py-24 bg-gray-900">
           <div className="container">
             <div className="grid md:grid-cols-3 gap-12">
               <div
                 className="text-center"
                 data-aos="fade-up"
                 data-aos-delay="0">
-                <div className="w-16 h-16 mx-auto mb-6 bg-gray-100 rounded-2xl flex items-center justify-center">
-                  <HiOutlineHome className="w-8 h-8 text-gray-700" />
+                <div className="w-16 h-16 mx-auto mb-6 bg-gray-800 rounded-2xl flex items-center justify-center">
+                  <HiOutlineHome className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-4">
+                <h3 className="text-xl font-semibold mb-4 text-white">
                   Індивідуальний підхід
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-300">
                   Створюємо меблі, які ідеально відповідають вашому простору та
                   стилю
                 </p>
@@ -154,11 +154,13 @@ export default function Home() {
                 className="text-center"
                 data-aos="fade-up"
                 data-aos-delay="100">
-                <div className="w-16 h-16 mx-auto mb-6 bg-gray-100 rounded-2xl flex items-center justify-center">
-                  <HiOutlineCube className="w-8 h-8 text-gray-700" />
+                <div className="w-16 h-16 mx-auto mb-6 bg-gray-800 rounded-2xl flex items-center justify-center">
+                  <HiOutlineCube className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-4">Якісні матеріали</h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-semibold mb-4 text-white">
+                  Якісні матеріали
+                </h3>
+                <p className="text-gray-300">
                   Використовуємо тільки перевірені матеріали від надійних
                   постачальників
                 </p>
@@ -167,11 +169,13 @@ export default function Home() {
                 className="text-center"
                 data-aos="fade-up"
                 data-aos-delay="200">
-                <div className="w-16 h-16 mx-auto mb-6 bg-gray-100 rounded-2xl flex items-center justify-center">
-                  <HiOutlineStar className="w-8 h-8 text-gray-700" />
+                <div className="w-16 h-16 mx-auto mb-6 bg-gray-800 rounded-2xl flex items-center justify-center">
+                  <HiOutlineStar className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-4">Гарантія якості</h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-semibold mb-4 text-white">
+                  Гарантія якості
+                </h3>
+                <p className="text-gray-300">
                   Надаємо гарантію на всі наші вироби та післяпродажну підтримку
                 </p>
               </div>
@@ -180,10 +184,10 @@ export default function Home() {
         </section>
 
         {/* Наші роботи */}
-        <section className="py-20 bg-gray-50">
+        <section className="py-20 bg-gray-800">
           <div className="container">
             <h2
-              className="text-3xl font-bold text-center mb-12"
+              className="text-3xl font-bold text-center mb-12 text-white"
               data-aos="fade-up">
               Наші роботи
             </h2>
@@ -207,7 +211,7 @@ export default function Home() {
             <div className="text-center">
               <Link
                 href="/gallery"
-                className="inline-flex items-center px-8 py-4 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl"
+                className="inline-flex items-center px-8 py-4 bg-gray-700 text-white rounded-full hover:bg-gray-600 transition-colors shadow-lg hover:shadow-xl"
                 data-aos="fade-up">
                 Дивитись більше
                 <HiArrowRight className="ml-2 w-5 h-5" />
@@ -217,7 +221,7 @@ export default function Home() {
         </section>
 
         {/* Про нас */}
-        <section className="py-20 bg-gray-50">
+        <section className="py-20 bg-gray-900">
           <div className="container">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div data-aos="fade-right">
@@ -230,8 +234,8 @@ export default function Home() {
                 />
               </div>
               <div data-aos="fade-left">
-                <h2 className="text-3xl font-bold mb-6">Про нас</h2>
-                <p className="text-gray-600 leading-relaxed">
+                <h2 className="text-3xl font-bold mb-6 text-white">Про нас</h2>
+                <p className="text-gray-300 leading-relaxed">
                   Ми - команда професіоналів, яка створює меблі з любов'ю до
                   деталей. Наш досвід та сучасне обладнання дозволяють втілювати
                   найсміливіші ідеї наших клієнтів у реальність.
@@ -242,9 +246,9 @@ export default function Home() {
         </section>
 
         {/* Як ми працюємо */}
-        <section className="py-20">
+        <section className="py-20 bg-gray-800">
           <div className="container">
-            <h2 className="text-3xl font-bold text-center mb-12">
+            <h2 className="text-3xl font-bold text-center mb-12 text-white">
               Як ми працюємо
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
@@ -278,8 +282,10 @@ export default function Home() {
                       className="object-cover rounded-lg"
                     />
                   </div>
-                  <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                  <p className="text-gray-600">{step.description}</p>
+                  <h3 className="text-xl font-bold mb-2 text-white">
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-300">{step.description}</p>
                 </div>
               ))}
             </div>
@@ -287,10 +293,10 @@ export default function Home() {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-gray-900">
           <div className="container">
             <h2
-              className="text-3xl font-bold text-center mb-12"
+              className="text-3xl font-bold text-center mb-12 text-white"
               data-aos="fade-up">
               Найпоширеніші запитання
             </h2>
@@ -303,21 +309,33 @@ export default function Home() {
         {/* Де нас знайти */}
 
         {/* Соціальні мережі */}
-        <section className="py-20 bg-gray-50">
+        <section className="py-20 bg-gray-800">
           <div className="container">
-            <h2 className="text-3xl font-bold text-center mb-12">
+            <h2 className="text-3xl font-bold text-center mb-12 text-white">
               Ми в соціальних мережах
             </h2>
             <div className="flex justify-center space-x-8">
               {[
-                { icon: FaFacebook, href: "#", label: "Facebook" },
-                { icon: FaInstagram, href: "#", label: "Instagram" },
-                { icon: FaTelegram, href: "#", label: "Telegram" },
+                {
+                  icon: FaInstagram,
+                  href: "https://www.instagram.com/wood_lab_/",
+                  label: "Instagram",
+                },
+                {
+                  icon: FaTelegram,
+                  href: "https://t.me/+380662046006",
+                  label: "Telegram",
+                },
+                {
+                  icon: FaTiktok,
+                  href: "https://www.tiktok.com/@wood_lab?_t=ZM-8tm8DgkgL4g&_r=1",
+                  label: "TikTok",
+                },
               ].map(social => (
                 <a
                   key={social.label}
                   href={social.href}
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                  className="text-gray-300 hover:text-white transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
                   data-aos="fade-up">

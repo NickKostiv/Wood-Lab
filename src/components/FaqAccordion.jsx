@@ -1,14 +1,23 @@
 "use client";
 import { useState } from "react";
-import { HiChevronDown } from "react-icons/hi";
+import { HiChevronDown, HiArrowRight } from "react-icons/hi";
+import Link from "next/link";
 
 const FaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Функція для обробки текстової відповіді
+  const renderAnswer = answer => {
+    if (typeof answer === "string") {
+      return <p className="text-gray-200">{answer}</p>;
+    }
+    return answer; // Повертаємо як є, якщо це вже JSX (для питання про матеріали)
+  };
+
   return (
     <div className="border-b border-gray-200">
       <button
-        className="w-full py-6 text-left flex justify-between items-center hover:text-gray-600 transition-colors"
+        className="w-full text-white py-6 text-left flex justify-between items-center transition-colors"
         onClick={() => setIsOpen(!isOpen)}>
         <span className="text-lg font-semibold">{question}</span>
         <HiChevronDown
@@ -21,7 +30,7 @@ const FaqItem = ({ question, answer }) => {
         className={`overflow-hidden transition-all duration-300 ${
           isOpen ? "max-h-96 pb-6" : "max-h-0"
         }`}>
-        <p className="text-gray-600">{answer}</p>
+        {renderAnswer(answer)}
       </div>
     </div>
   );
@@ -32,7 +41,7 @@ export default function FaqAccordion() {
     {
       question: "Скільки часу займає виготовлення меблів?",
       answer:
-        "Термін виготовлення залежить від складності проекту та завантаженості виробництва. В середньому, кухня виготовляється 3-4 тижні, шафа-купе - 2-3 тижні. Точний термін ми повідомимо після узгодження всіх деталей проекту.",
+        "Термін виготовлення залежить від складності проекту та завантаженості виробництва. В середньому 45 робочих днів. Точний термін ми повідомимо після узгодження всіх деталей проекту.",
     },
     {
       question: "Чи надаєте ви гарантію на меблі?",
@@ -45,14 +54,21 @@ export default function FaqAccordion() {
         "Процес починається з консультації та замірів приміщення. Потім ми створюємо 3D-проект та прораховуємо вартість. Після узгодження всіх деталей та внесення передоплати починається виробництво. Завершальний етап - доставка та монтаж.",
     },
     {
-      question: "Чи можна замовити тільки дизайн-проект?",
-      answer:
-        "Так, ми надаємо послугу створення дизайн-проекту окремо. Ви отримаєте детальні креслення та 3D-візуалізацію вашого майбутнього інтер'єру з усіма необхідними специфікаціями.",
-    },
-    {
       question: "Які матеріали ви використовуєте?",
-      answer:
-        "Ми працюємо з якісними матеріалами від перевірених постачальників: ДСП Egger та Kronospan, фурнітура Blum та Hafele, стільниці з штучного каменю, натурального граніту та кварциту. Всі матеріали сертифіковані та екологічно безпечні.",
+      answer: (
+        <div>
+          <p className="text-gray-200 mb-4">
+            Ми використовуємо тільки перевірені матеріали, які забезпечують
+            міцність, довгий термін служби та естетичний вигляд меблів.
+          </p>
+          <Link
+            href="/materials"
+            className="inline-flex items-center px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors">
+            Дізнатися більше про матеріали
+            <HiArrowRight className="ml-2 w-5 h-5" />
+          </Link>
+        </div>
+      ),
     },
   ];
 
