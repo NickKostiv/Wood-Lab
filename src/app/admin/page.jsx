@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { supabase } from "@/lib/supabase";
@@ -11,6 +11,7 @@ export default function Admin() {
   const [category, setCategory] = useState("kitchens");
   const [uploading, setUploading] = useState(false);
   const router = useRouter();
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     const checkSession = async () => {
@@ -38,28 +39,30 @@ export default function Admin() {
   }, []);
 
   useEffect(() => {
+    const loadImages = async () => {
+      try {
+        console.log("Loading images for category:", category);
+        const { data, error } = await supabase
+          .from("images")
+          .select("*")
+          .eq("category", category);
+
+        if (error) {
+          console.error("Error loading images:", error);
+          return;
+        }
+
+        console.log("Loaded images:", data);
+        setImages(data || []);
+      } catch (error) {
+        console.error("Error loading images:", error);
+      }
+    };
+
     if (session) {
       loadImages();
     }
-  }, [category]);
-
-  const loadImages = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("images")
-        .select("*")
-        .eq("category", category);
-
-      if (error) {
-        console.error("Error loading images:", error);
-        return;
-      }
-
-      setImages(data || []);
-    } catch (error) {
-      console.error("Error loading images:", error);
-    }
-  };
+  }, [category, session]);
 
   const uploadImage = async event => {
     try {
@@ -196,39 +199,53 @@ export default function Admin() {
     }
   };
 
+  const handleUploadClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = event => {
+    uploadImage(event);
+  };
+
   return (
     <main>
       <Navbar />
-      <div className="pt-24 pb-12">
-        <div className="container">
-          <h1 className="text-4xl font-bold text-center mb-8">
-            Адміністрування галереї
-          </h1>
+      <div className="min-h-screen bg-gray-100 pt-24 pb-12">
+        <div className="container mx-auto px-4">
+          <div className="relative z-10 bg-white rounded-lg shadow p-6 mb-8">
+            <h1 className="text-2xl font-bold mb-6">Адмін панель</h1>
 
-          <div className="mb-8">
-            <select
-              value={category}
-              onChange={e => setCategory(e.target.value)}
-              className="w-full md:w-auto px-4 py-2 border rounded-lg">
-              <option value="kitchens">Кухні</option>
-              <option value="bathrooms">Ванни</option>
-              <option value="bedrooms">Спальні</option>
-              <option value="living-rooms">Вітальні</option>
-            </select>
+            <div className="space-y-4">
+              <div>
+                <select
+                  value={category}
+                  onChange={e => setCategory(e.target.value)}
+                  className="w-full p-2 border rounded-lg">
+                  <option value="kitchens">Кухні</option>
+                  <option value="bathrooms">Ванни</option>
+                  <option value="bedrooms">Спальні</option>
+                  <option value="living-rooms">Вітальні</option>
+                </select>
+              </div>
 
-            <label className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-lg cursor-pointer">
-              {uploading ? "Завантаження..." : "Додати фото"}
-              <input
-                type="file"
-                className="hidden"
-                accept="image/*"
-                onChange={uploadImage}
-                disabled={uploading}
-              />
-            </label>
+              <div className="relative z-0">
+                <button
+                  onClick={handleUploadClick}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                  Додати фото
+                </button>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  className="hidden"
+                  accept="image/*"
+                />
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {images.map(image => (
               <div
                 key={image.id}

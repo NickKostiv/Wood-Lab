@@ -1,11 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { HiMenu, HiX } from "react-icons/hi";
+import { supabase } from "@/lib/supabase";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("kitchens");
+  const [images, setImages] = useState({});
 
   const menuItems = [
     { title: "Галерея", href: "/gallery" },
@@ -13,22 +17,53 @@ export default function Navbar() {
     { title: "Акції", href: "/promotions" },
   ];
 
+  // Завантаження зображень з бази даних
+  useEffect(() => {
+    const loadImages = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("images")
+          .select("*")
+          .eq("category", selectedCategory);
+
+        if (error) {
+          console.error("Error loading images:", error);
+          return;
+        }
+
+        // Групуємо зображення за категоріями
+        setImages(prevImages => ({
+          ...prevImages,
+          [selectedCategory]: data || [],
+        }));
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    loadImages();
+  }, [selectedCategory]); // Завантажуємо при зміні категорії
+
+  const handleCategoryChange = category => {
+    setSelectedCategory(category);
+  };
+
   return (
-    <nav className="fixed w-full bg-white/80 backdrop-blur-md z-50 shadow-sm">
+    <nav className="fixed w-full bg-white shadow-lg z-50">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center space-x-2">
             <Image
-              src="/logo.jpg"
-              alt="Логотип"
-              width={70}
-              height={70}
-              className="object-contain rounded-full"
+              src={`${process.env.NEXT_PUBLIC_BASE_URL || ""}/logo.jpg`}
+              alt="Logo"
+              width={40}
+              height={40}
+              className="rounded-full"
             />
+            <span className="font-bold text-xl">Wood Lab</span>
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
             {menuItems.map(item => (
               <Link
                 key={item.title}
@@ -39,32 +74,57 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
-          <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? (
-              <HiX className="h-6 w-6" />
-            ) : (
-              <HiMenu className="h-6 w-6" />
-            )}
-          </button>
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-lg hover:bg-gray-100 focus:outline-none">
+              {isOpen ? (
+                <HiX className="w-6 h-6" />
+              ) : (
+                <HiMenu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden absolute top-20 left-0 right-0 bg-white border-t">
-            <div className="flex flex-col space-y-4 px-4 py-6">
-              {menuItems.map(item => (
-                <Link
-                  key={item.title}
-                  href={item.href}
-                  className="text-gray-700 hover:text-gray-900 transition-colors"
-                  onClick={() => setIsOpen(false)}>
-                  {item.title}
-                </Link>
-              ))}
-            </div>
+        <div
+          className={`md:hidden absolute left-0 right-0 bg-white px-4 pt-2 pb-4 shadow-lg transition-all duration-300 ${
+            isOpen ? "top-20 opacity-100" : "-top-96 opacity-0"
+          }`}>
+          <div className="space-y-3">
+            {menuItems.map(item => (
+              <Link
+                key={item.title}
+                href={item.href}
+                className="text-gray-700 hover:text-gray-900 transition-colors"
+                onClick={() => setIsOpen(false)}>
+                {item.title}
+              </Link>
+            ))}
           </div>
-        )}
+        </div>
+      </div>
+
+      <div
+        className={`absolute left-0 right-0 bg-white shadow-lg transition-all duration-300 ${
+          isDropdownOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+        style={{
+          top: "100%",
+          zIndex: 40,
+        }}>
+        <div className="grid grid-cols-3 gap-4 p-6">
+          {images[selectedCategory]?.map((image, index) => (
+            <div key={image.id} className="aspect-square relative">
+              <Image
+                src={image.url}
+                alt={`${selectedCategory} ${index + 1}`}
+                fill
+                className="object-cover rounded-lg"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </nav>
   );
