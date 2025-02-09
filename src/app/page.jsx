@@ -32,7 +32,7 @@ export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: "Wood Lab",
+    name: "Wood Lab - Меблі в Івано-Франківську",
     image: ["https://wood-lab.vercel.app/logo.jpg"],
     "@id": "https://wood-lab.vercel.app",
     url: "https://wood-lab.vercel.app",
@@ -51,7 +51,11 @@ export default function Home() {
     priceRange: "₴₴",
     keywords:
       "меблі Івано-Франківськ, дерев'яні меблі, меблі з дерева, кухні з дерева",
-    areaServed: "Івано-Франківськ",
+    areaServed: {
+      "@type": "City",
+      name: "Івано-Франківськ",
+    },
+    hasMap: "https://goo.gl/maps/ваші-координати",
   };
 
   return (
@@ -91,7 +95,7 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div data-aos="fade-right">
                 <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-800 to-gray-600">
-                  Ваші меблі - наша пристрасть
+                  Wood Lab - Дерев'яні меблі в Івано-Франківську
                 </h1>
                 <p className="text-xl text-gray-600 mb-8">
                   Створюємо унікальні меблі, які перетворюють ваш простір у
